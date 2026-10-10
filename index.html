@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NAEEM FX PRO - Ultimate SMC Dashboard</title>
+<style>
+body{background:#0a0e1a;color:#e0e6ed;font-family:Inter, sans-serif;margin:0;padding:10px}
+.header{display:flex;justify-content:space-between;align-items:center;background:#111a2e;padding:12px 18px;border-radius:12px;border:1px solid #1e2f55}
+.badge{background:#ff3b3b;color:white;padding:4px 10px;border-radius:20px;font-size:12px}
+.grid{display:grid;grid-template-columns:260px 1fr 260px;gap:12px;margin-top:12px}
+.card{background:#111a2e;border:1px solid #1e2f55;border-radius:12px;padding:12px}
+.signal-wait{background:linear-gradient(90deg,#1a2a4a,#2a3a0a);border:2px solid #ffcc00;color:#ffcc00;text-align:center;padding:20px;font-size:28px;font-weight:900;border-radius:12px;letter-spacing:2px}
+.symbol-list button{background:#162240;border:1px solid #2a3f6a;color:#8aa0c0;padding:6px 10px;margin:3px;border-radius:6px;cursor:pointer}
+.symbol-list button.active{background:#2a5bd7;color:white}
+.checklist label{display:flex;gap:8px;padding:7px;background:#0f1930;margin:4px 0;border-radius:6px;font-size:13px;border:1px solid #1c2d50}
+.progress{height:8px;background:#0f1930;border-radius:10px;overflow:hidden;margin:8px 0}
+.progress-bar{height:100%;background:#2a5bd7;width:0%}
+.overlay-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.overlay-grid span{font-size:12px;background:#0f1930;padding:6px;border-radius:6px;border:1px solid #1c2d50}
+.price-big{font-size:32px;font-weight:800}
+</style>
+</head>
+<body>
+<div class="header">
+<div><b>NF NAEEM FX PRO</b> — ULTIMATE SMC • FUSION STRATEGY <span class="badge">DEMO PREVIEW • NOT LIVE</span></div>
+<div style="display:flex;gap:8px"><a href="https://www.forexfactory.com/calendar" target="_blank" style="color:#5da0ff;text-decoration:none">News ↗</a><a href="https://tradingview.com" target="_blank" style="color:#5da0ff;text-decoration:none">TradingView ↗</a></div>
+</div>
+<div class="grid">
+<div class="card">
+<div style="font-size:11px;opacity:.7">QUICK SYMBOL</div>
+<div class="symbol-list"><button class="active">EURUSD</button><button>GBPUSD</button><button>BTCUSD</button><button>XAUUSD</button><button>NAS100</button></div>
+<div style="margin-top:12px;font-size:11px;opacity:.7">TIMEFRAME</div>
+<div class="symbol-list"><button>5m</button><button class="active">15m</button><button>1H</button><button>4H</button><button>1D</button></div>
+<div style="margin-top:15px"><div>SYMBOL: <b>EURUSD</b></div><div class="price-big">1.08426</div><div style="color:#2ecc71">+0.12% (sample)</div><div style="font-size:12px;opacity:.6;margin-top:6px">BID/ASK: 1.08424 / 1.08428<br>Spread: sample only</div></div>
+<div style="margin-top:15px;background:#2a1a1a;padding:8px;border-radius:8px;text-align:center">BOT STATUS: LOCKED<br><small>Live execution disabled</small></div>
+</div>
+<div class="card">
+<div class="signal-wait">WAIT — 0 / 12 CONFIRMED</div>
+<div style="margin:10px 0" class="progress"><div class="progress-bar" id="pb"></div></div>
+<div style="background:#0d0d0d;border-radius:8px;padding:5px;min-height:380px;display:flex;align-items:center;justify-content:center">
+<div style="text-align:center;opacity:.6">TradingView Chart Placeholder<br><small>Connect TradingView Widget API for live EURUSD 15m<br>Structure ✓ OB ✓ FVG ✓</small></div>
+</div>
+<div class="overlay-grid" style="margin-top:10px">
+<span>BOS</span><span>CHoCH / MSS</span><span>Order Blocks</span><span>FVG</span><span>IFVG</span><span>Breaker Blocks</span><span>Liquidity Sweeps</span><span>EQH/EQL</span><span>Premium/Discount</span><span>Fibonacci</span><span>EMA 9/21/50</span><span>GannZilla-style*</span>
+</div>
+</div>
+<div class="card">
+<div style="font-size:12px">MARKET BIAS: <b style="color:#ffcc00">WAIT</b><br>CONFIRMATIONS: <b id="conf">0 / 12</b><br>ACTIVE LAYERS: 06<br>ATR: Demo</div>
+<hr style="border-color:#1c2d50;margin:10px 0">
+<div style="font-size:12px"><b>INSTITUTIONAL FLOW (SIMULATED)</b><br>BUY/SELL: 52/48<br>Volume Delta: +1.2K<br>VWAP: Above<br>Regime: Balanced</div>
+<hr style="border-color:#1c2d50;margin:10px 0">
+<div style="font-size:12px"><b>TRADE SETUP</b><br>ENTRY: —<br>SL: —<br>TP1: —<br>R:R 1:2 target</div>
+<div style="margin-top:10px;background:#1a2a1a;padding:8px;border-radius:8px">RISK GUARD: LOCKED<br>Risk/trade 0.25%<br>Daily limit 1.00%</div>
+</div>
+</div>
+<div class="card" style="margin-top:12px">
+<b>ALL-IN-ONE ENTRY CONFIRMATION CHECKLIST - FUSION RULESET v1</b>
+<div id="checks" style="margin-top:8px"></div>
+</div>
+<script>
+const items=[
+"1 · Higher-timeframe direction & market regime",
+"2 · Fundamental & macro event filter",
+"3 · Liquidity target / sweep",
+"4 · Breakout / BOS / CHoCH confirmation",
+"5 · FVG / IFVG / Order Block / breaker context",
+"6 · Fibonacci retracement confluence",
+"7 · Pullback / retest and entry trigger",
+"8 · Session, volatility, spread & data quality",
+"9 · Sentiment / cross-market context",
+"10 · Trading psychology & discipline check",
+"11 · Risk, stop, target & reward/risk",
+"12 · Account guard & trade limit"
+];
+const cont=document.getElementById('checks');
+items.forEach((t,i)=>{
+ let lab=document.createElement('label');
+ lab.innerHTML=`<input type="checkbox" onchange="update()"> ${t}`;
+ cont.appendChild(lab);
+});
+function update(){
+ let c=document.querySelectorAll('#checks input:checked').length;
+ document.getElementById('conf').innerText=c+" / 12";
+ document.getElementById('pb').style.width=(c/12*100)+"%";
+ document.querySelector('.signal-wait').innerText= c>=8 ? "READY - "+c+" /12" : "WAIT - "+c+" / 12 CONFIRMED";
+ document.querySelector('.signal-wait').style.borderColor= c>=8 ? "#2ecc71" : "#ffcc00";
+ document.querySelector('.signal-wait').style.color= c>=8 ? "#2ecc71" : "#ffcc00";
+}
+</script>
+</body>
+</html>
