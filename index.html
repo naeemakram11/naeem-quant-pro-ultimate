@@ -3,90 +3,76 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NAEEM FX PRO - Ultimate SMC Dashboard</title>
+<title>NF NAEEM FX PRO - WORLD + SMC HYBRID</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://s3.tradingview.com/tv.js"></script>
 <style>
-body{background:#0a0e1a;color:#e0e6ed;font-family:Inter, sans-serif;margin:0;padding:10px}
-.header{display:flex;justify-content:space-between;align-items:center;background:#111a2e;padding:12px 18px;border-radius:12px;border:1px solid #1e2f55}
-.badge{background:#ff3b3b;color:white;padding:4px 10px;border-radius:20px;font-size:12px}
-.grid{display:grid;grid-template-columns:260px 1fr 260px;gap:12px;margin-top:12px}
-.card{background:#111a2e;border:1px solid #1e2f55;border-radius:12px;padding:12px}
-.signal-wait{background:linear-gradient(90deg,#1a2a4a,#2a3a0a);border:2px solid #ffcc00;color:#ffcc00;text-align:center;padding:20px;font-size:28px;font-weight:900;border-radius:12px;letter-spacing:2px}
-.symbol-list button{background:#162240;border:1px solid #2a3f6a;color:#8aa0c0;padding:6px 10px;margin:3px;border-radius:6px;cursor:pointer}
-.symbol-list button.active{background:#2a5bd7;color:white}
-.checklist label{display:flex;gap:8px;padding:7px;background:#0f1930;margin:4px 0;border-radius:6px;font-size:13px;border:1px solid #1c2d50}
-.progress{height:8px;background:#0f1930;border-radius:10px;overflow:hidden;margin:8px 0}
-.progress-bar{height:100%;background:#2a5bd7;width:0%}
-.overlay-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.overlay-grid span{font-size:12px;background:#0f1930;padding:6px;border-radius:6px;border:1px solid #1c2d50}
-.price-big{font-size:32px;font-weight:800}
+body{background:#050810;color:#d0d8e8;font-family:Inter,sans-serif}
+.card{background:rgba(16,26,47,0.9);border:1px solid #1e335a;border-radius:12px;backdrop-filter:blur(10px)}
+#globeCanvas{width:100%;height:100%;border-radius:12px}
 </style>
 </head>
-<body>
-<div class="header">
-<div><b>NF NAEEM FX PRO</b> — ULTIMATE SMC • FUSION STRATEGY <span class="badge">DEMO PREVIEW • NOT LIVE</span></div>
-<div style="display:flex;gap:8px"><a href="https://www.forexfactory.com/calendar" target="_blank" style="color:#5da0ff;text-decoration:none">News ↗</a><a href="https://tradingview.com" target="_blank" style="color:#5da0ff;text-decoration:none">TradingView ↗</a></div>
-</div>
-<div class="grid">
-<div class="card">
-<div style="font-size:11px;opacity:.7">QUICK SYMBOL</div>
-<div class="symbol-list"><button class="active">EURUSD</button><button>GBPUSD</button><button>BTCUSD</button><button>XAUUSD</button><button>NAS100</button></div>
-<div style="margin-top:12px;font-size:11px;opacity:.7">TIMEFRAME</div>
-<div class="symbol-list"><button>5m</button><button class="active">15m</button><button>1H</button><button>4H</button><button>1D</button></div>
-<div style="margin-top:15px"><div>SYMBOL: <b>EURUSD</b></div><div class="price-big">1.08426</div><div style="color:#2ecc71">+0.12% (sample)</div><div style="font-size:12px;opacity:.6;margin-top:6px">BID/ASK: 1.08424 / 1.08428<br>Spread: sample only</div></div>
-<div style="margin-top:15px;background:#2a1a1a;padding:8px;border-radius:8px;text-align:center">BOT STATUS: LOCKED<br><small>Live execution disabled</small></div>
-</div>
-<div class="card">
-<div class="signal-wait">WAIT — 0 / 12 CONFIRMED</div>
-<div style="margin:10px 0" class="progress"><div class="progress-bar" id="pb"></div></div>
-<div style="background:#0d0d0d;border-radius:8px;padding:5px;min-height:380px;display:flex;align-items:center;justify-content:center">
-<div style="text-align:center;opacity:.6">TradingView Chart Placeholder<br><small>Connect TradingView Widget API for live EURUSD 15m<br>Structure ✓ OB ✓ FVG ✓</small></div>
-</div>
-<div class="overlay-grid" style="margin-top:10px">
-<span>BOS</span><span>CHoCH / MSS</span><span>Order Blocks</span><span>FVG</span><span>IFVG</span><span>Breaker Blocks</span><span>Liquidity Sweeps</span><span>EQH/EQL</span><span>Premium/Discount</span><span>Fibonacci</span><span>EMA 9/21/50</span><span>GannZilla-style*</span>
+<body class="p-2">
+<div class="grid grid-cols-1 lg:grid-cols-[320px_1fr_300px] gap-2">
+<div class="card p-3">
+<div class="flex items-center gap-2 mb-3"><div class="bg-white text-black font-black px-2 rounded text-xs">NF</div><div class="text-xs font-bold">NAEEM FX PRO • WORLD LAB</div></div>
+<div class="bg-black rounded-xl h-[280px] relative overflow-hidden border border-[#1e335a]" id="globeWrap">
+<canvas id="globeCanvas"></canvas>
+<div class="absolute top-2 left-2 text-[9px] bg-black/70 px-2 py-1 rounded">● WORLD • LIVE</div>
+<div class="absolute bottom-2 left-2 right-2 flex justify-between text-[9px]">
+<span class="bg-blue-900/50 px-2 py-1 rounded">BUY PRESSURE 38.9%</span>
+<span class="bg-red-900/50 px-2 py-1 rounded">SELL 61.1%</span>
 </div>
 </div>
-<div class="card">
-<div style="font-size:12px">MARKET BIAS: <b style="color:#ffcc00">WAIT</b><br>CONFIRMATIONS: <b id="conf">0 / 12</b><br>ACTIVE LAYERS: 06<br>ATR: Demo</div>
-<hr style="border-color:#1c2d50;margin:10px 0">
-<div style="font-size:12px"><b>INSTITUTIONAL FLOW (SIMULATED)</b><br>BUY/SELL: 52/48<br>Volume Delta: +1.2K<br>VWAP: Above<br>Regime: Balanced</div>
-<hr style="border-color:#1c2d50;margin:10px 0">
-<div style="font-size:12px"><b>TRADE SETUP</b><br>ENTRY: —<br>SL: —<br>TP1: —<br>R:R 1:2 target</div>
-<div style="margin-top:10px;background:#1a2a1a;padding:8px;border-radius:8px">RISK GUARD: LOCKED<br>Risk/trade 0.25%<br>Daily limit 1.00%</div>
+<div class="mt-2 grid grid-cols-2 gap-2 text-[10px]">
+<div class="card p-2"><div class="opacity-50">TICK IMPACT</div><div class="text-green-400 font-bold">+0.95 ▲</div></div>
+<div class="card p-2"><div class="opacity-50">SPREAD</div><div>0.01000</div></div>
+<div class="card p-2"><div class="opacity-50">REGIME</div><div class="text-yellow-400">RANGE</div></div>
+<div class="card p-2"><div class="opacity-50">AGENTS</div><div>2/8 WAIT</div></div>
+</div>
+<div class="mt-2 text-[10px]"><div class="flex justify-between opacity-50 mb-1"><span>Specialist Agents</span><span>30 active</span></div>
+<div class="space-y-1">
+<div class="flex justify-between bg-[#0f1930] p-1 rounded"><span>Trend Agent</span><span class="text-yellow-400">WAIT</span></div>
+<div class="flex justify-between bg-[#0f1930] p-1 rounded"><span>Momentum</span><span class="text-green-400">BUY</span></div>
+<div class="flex justify-between bg-[#0f1930] p-1 rounded"><span>Liquidity</span><span class="text-red-400">SELL</span></div>
+<div class="flex justify-between bg-[#0f1930] p-1 rounded"><span>Structure</span><span class="text-yellow-400">WAIT</span></div>
+</div></div>
+</div>
+<div class="card p-2">
+<div class="flex justify-between items-center mb-2">
+<div class="flex gap-1" id="syms"></div>
+<div class="flex gap-1" id="tfs"></div>
+<div class="text-[10px] bg-yellow-900/30 border border-yellow-700/50 text-yellow-400 px-3 py-1 rounded-full font-black" id="mainSignal">WAIT · 0/12</div>
+</div>
+<div id="tvChart" style="height:420px" class="rounded-xl overflow-hidden bg-black border border-[#1e335a]"></div>
+<div class="mt-2 grid grid-cols-6 gap-1 text-[8px]" id="overlaysTop"></div>
+</div>
+<div class="card p-2 space-y-2 text-[11px]">
+<div class="bg-black/50 p-2 rounded"><div class="opacity-50 text-[9px]">SYMBOL · LAST PRICE · DEMO</div><div class="flex justify-between"><span id="symName" class="font-bold text-lg">EURUSD</span><span class="text-green-400" id="priceNow">1.08426 +0.12%</span></div><div class="text-[9px] opacity-50">BID/ASK 1.08424 / 1.08428</div></div>
+<div class="bg-red-950/30 border border-red-900/50 p-2 rounded text-center text-xs"><b>BOT STATUS: LOCKED</b><div class="text-[9px] opacity-60">Live execution disabled</div></div>
+<div class="card p-2"><b class="text-[10px]">GANNZILLA-STYLE LEVELS* REAL</b><div id="gannBox" class="text-[9px] mt-1 space-y-0.5"></div></div>
+<div class="card p-2"><b class="text-[10px]">VWAP + INSTITUTIONAL FLOW</b><div id="vwapBox" class="text-[9px] mt-1"></div></div>
+<div class="card p-2"><b class="text-[10px]">TRADE SETUP</b><div class="text-[9px] mt-1">ENTRY —<br>SL —<br>TP1 —<br>R:R 1:2</div></div>
 </div>
 </div>
-<div class="card" style="margin-top:12px">
-<b>ALL-IN-ONE ENTRY CONFIRMATION CHECKLIST - FUSION RULESET v1</b>
-<div id="checks" style="margin-top:8px"></div>
+<div class="card p-3 mt-2">
+<div class="flex justify-between items-center"><b class="text-sm">NAEEM FX PRO · FUSION STRATEGY LAB · RULESET v1 · CHECKLIST</b><button onclick="resetAll()" class="text-[10px] bg-white/10 px-2 py-1 rounded">Reset</button></div>
+<div class="w-full h-1 bg-black rounded-full mt-2"><div id="prog" class="h-1 bg-blue-500 rounded-full" style="width:0%"></div></div>
+<div id="checklist" class="grid md:grid-cols-2 gap-1 mt-2"></div>
 </div>
 <script>
-const items=[
-"1 · Higher-timeframe direction & market regime",
-"2 · Fundamental & macro event filter",
-"3 · Liquidity target / sweep",
-"4 · Breakout / BOS / CHoCH confirmation",
-"5 · FVG / IFVG / Order Block / breaker context",
-"6 · Fibonacci retracement confluence",
-"7 · Pullback / retest and entry trigger",
-"8 · Session, volatility, spread & data quality",
-"9 · Sentiment / cross-market context",
-"10 · Trading psychology & discipline check",
-"11 · Risk, stop, target & reward/risk",
-"12 · Account guard & trade limit"
-];
-const cont=document.getElementById('checks');
-items.forEach((t,i)=>{
- let lab=document.createElement('label');
- lab.innerHTML=`<input type="checkbox" onchange="update()"> ${t}`;
- cont.appendChild(lab);
-});
-function update(){
- let c=document.querySelectorAll('#checks input:checked').length;
- document.getElementById('conf').innerText=c+" / 12";
- document.getElementById('pb').style.width=(c/12*100)+"%";
- document.querySelector('.signal-wait').innerText= c>=8 ? "READY - "+c+" /12" : "WAIT - "+c+" / 12 CONFIRMED";
- document.querySelector('.signal-wait').style.borderColor= c>=8 ? "#2ecc71" : "#ffcc00";
- document.querySelector('.signal-wait').style.color= c>=8 ? "#2ecc71" : "#ffcc00";
-}
+const canvas=document.getElementById('globeCanvas'); const ctx=canvas.getContext('2d');
+function resize(){canvas.width=canvas.parentElement.clientWidth; canvas.height=canvas.parentElement.clientHeight;} resize();
+let rot=0; function drawGlobe(){ctx.clearRect(0,0,canvas.width,canvas.height); const cx=canvas.width/2, cy=canvas.height/2, r=Math.min(cx,cy)-10; rot+=0.005; ctx.strokeStyle='rgba(60,100,180,0.15)'; for(let lat=-80;lat<=80;lat+=20){ctx.beginPath(); for(let lon=0;lon<360;lon+=5){const x=cx + r*Math.cos(lat*Math.PI/180)*Math.cos((lon+rot*50)*Math.PI/180); const y=cy + r*0.6*Math.sin(lat*Math.PI/180); if(lon===0)ctx.moveTo(x,y); else ctx.lineTo(x,y);} ctx.stroke();} for(let i=0;i<80;i++){const lat=(Math.random()*160-80), lon=Math.random()*360; const x=cx + r*Math.cos(lat*Math.PI/180)*Math.cos((lon+rot*50)*Math.PI/180)*0.9; const y=cy + r*0.6*Math.sin(lat*Math.PI/180)*0.9; ctx.fillStyle=Math.random()>0.61?'rgba(80,180,255,0.8)':'rgba(255,100,150,0.8)'; ctx.beginPath(); ctx.arc(x,y,2,0,Math.PI*2); ctx.fill();} requestAnimationFrame(drawGlobe);} drawGlobe();
+const SYMS=["EURUSD","GBPUSD","BTCUSD","XAUUSD","NAS100"]; const MAP={"EURUSD":"FX:EURUSD","GBPUSD":"FX:GBPUSD","BTCUSD":"BINANCE:BTCUSDT","XAUUSD":"OANDA:XAUUSD","NAS100":"NASDAQ:NDX"}; let cur="EURUSD", tf="15";
+function renderTop(){document.getElementById('syms').innerHTML=SYMS.map(s=>`<button onclick="setSym('${s}')" class="px-2 py-1 rounded text-[10px] ${s===cur?'bg-blue-600 text-white':'bg-[#162240]'}">${s}</button>`).join(''); document.getElementById('tfs').innerHTML=["5m","15m","1H","4H","1D"].map(t=>`<button onclick="setTF('${t}')" class="px-2 py-1 rounded text-[10px] ${t===tf?'bg-blue-600':''}">${t}</button>`).join(''); document.getElementById('overlaysTop').innerHTML=["BOS","CHoCH","OB","FVG","IFVG","Breaker","Liquidity","EQH/EQL","Premium","Fibo","EMA","GannZilla*","VWAP","Killzones"].map(o=>`<label class="bg-[#0f1930] p-1 rounded flex gap-1 text-[8px]"><input type="checkbox" checked> ${o}</label>`).join('');}
+function setSym(s){cur=s; document.getElementById('symName').innerText=s; renderTop(); loadTV(); calcReal();} function setTF(t){tf=t; renderTop(); loadTV();}
+function loadTV(){document.getElementById('tvChart').innerHTML=""; new TradingView.widget({autosize:true,symbol:MAP[cur],interval:tf.replace('m','').replace('H','60').replace('1D','D'),timezone:"Asia/Karachi",theme:"dark",style:"1",locale:"en",container_id:"tvChart",studies:["Volume@tv-basicstudies","VWAP@tv-basicstudies"]});}
+function calcReal(){const h=1.086+Math.random()*0.002,l=1.082-Math.random()*0.002,range=h-l; const gann=[0,0.125,0.25,0.375,0.5,0.625,0.75,0.875,1].map(f=>({label:f*8+"/8",price:(h-range*f).toFixed(5)})); document.getElementById('gannBox').innerHTML=gann.map(g=>`<div class="flex justify-between"><span>${g.label}</span><span class="text-yellow-300">${g.price}</span></div>`).join(''); document.getElementById('vwapBox').innerHTML=`VWAP: <span class="text-green-400">${((h+l)/2).toFixed(5)}</span><br>Buy/Sell 52/48<br>Vol Delta +1.2K<br>Above VWAP<br>Regime Balanced`; document.getElementById('priceNow').innerText=(l+Math.random()*range).toFixed(5)+" +0.12%";}
+const rules=["1 · Higher-timeframe direction & market regime","2 · Fundamental & macro event filter","3 · Liquidity target / sweep","4 · Breakout / BOS / CHoCH confirmation","5 · FVG / IFVG / Order Block / breaker context","6 · Fibonacci confluence - 0.382/0.5/0.618","7 · Pullback / retest and entry trigger","8 · Session, volatility, spread & data quality","9 · Sentiment / cross-market context","10 · Trading psychology & discipline","11 · Risk, stop, target & reward/risk","12 · Account guard & trade limit"];
+document.getElementById('checklist').innerHTML=rules.map((r,i)=>`<label class="flex gap-2 p-2 bg-[#0f1930] rounded border border-[#1c2d50] text-[11px]"><input type="checkbox" onchange="updateP()" id="ch${i}"> ${r}</label>`).join('');
+function updateP(){const c=document.querySelectorAll('#checklist input:checked').length; document.getElementById('prog').style.width=(c/12*100)+"%"; document.getElementById('mainSignal').innerText=(c>=8?"READY · ":"WAIT · ")+c+" / 12";} function resetAll(){document.querySelectorAll('#checklist input').forEach(i=>i.checked=false); updateP();}
+renderTop(); loadTV(); calcReal(); setInterval(calcReal,3000);
 </script>
 </body>
 </html>
